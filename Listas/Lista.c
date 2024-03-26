@@ -1,98 +1,112 @@
-
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 #include<conio.h>
 #include <stdlib.h>
 
+
+//ESTRUTURA QUE DEFINE O NÓ DA LISTA 
+//CADA NÓ SÓ TEM ACESSO AO SEGUINTE 
 typedef struct Node {
-    int data;
-    struct Node* next;
+	int data;
+	struct Node* next;
 }NODE;
 
-void printList(NODE* l);
-void deleteList(NODE** l);
-int sizeList(NODE* l);
-int coountList(NODE* l);
+//ESTA DECLARAÇÃO PERMITE EM VEZ DE DECLARARMOS UMA LISTA COMO
+// NODE* L PODERMOS DECLARAR COMO LIST L
+typedef NODE* List;
 
+// DECLARAÇÕES DE FUNÇÕES QUE VÃO SER DEFINIDAS POSTERIORMENTE
+void printList(List L);
+void deleteList(List L);
+int sizeList(List L);
+int countList(List l);
+
+//MAIN
 int main() {
-    NODE* primeiro = NULL;
-    NODE* segundo = NULL;
-    NODE* terceiro = NULL;
+	List primeiro = NULL;
+	List segundo = NULL;
+	List terceiro = NULL;
+	//List quarto = NULL;
 
-    primeiro = (NODE*)malloc(sizeof(NODE));
-    segundo = (NODE*)malloc(sizeof(NODE));
-    terceiro = (NODE*)malloc(sizeof(NODE));
+	primeiro=(NODE*)malloc(sizeof(NODE));
+	segundo=(NODE*)malloc(sizeof(NODE));
+	terceiro=(NODE*)malloc(sizeof(NODE));
+	//quarto=(NODE*)malloc(sizeof(NODE));
 
-    primeiro->data = 5;
-    primeiro->next = segundo;
 
-    segundo->data = 12;
-    segundo->next = terceiro;
+	primeiro->data = 2;
+	primeiro->next = segundo;
 
-    terceiro->data = 13;
-    terceiro->next = NULL;
+	
+	segundo->data = 4;
+	segundo->next = terceiro;
 
-    //printList(primeiro->next);         // aparece o 2 e 3 numero
-    printList(primeiro);                //aparecem tds os numeros
+	terceiro->data = 7;
+	terceiro->next = NULL;//quarto;
 
-    //deleteList(&primeiro);              // apaga a lista
+	//quarto->data = 10;
+	//quarto->next = NULL;
 
-    printList(primeiro);
+	printList(primeiro);
 
-    sizeList(primeiro);                 // apresenta o tamanho da lista
+	
+	sizeList(primeiro);
 
-    countList(primeiro);
+	countList(primeiro);
 }
 
-void printList(NODE* l) {
-    if (l == NULL) {
-        printf("\n Lista Vazia");
-        return;
-    }
-    while (l != NULL) {
-        printf(" %d ", l->data);        // l --- nome da lista
-        l = l->next;
-    }
 
-}
+void printList(List L) {
+	if (L == NULL) {
+		printf("\n \n\nA LISTA ENCONTRA-SE VAZIA");
+		return;
+	}
 
-void deleteList(NODE** l) {
+	while (L != NULL) {
 
-    NODE* current = *l;
-    NODE* seguinte;
-
-    while (current != NULL) {
-        seguinte = current->next;
-        free(current);
-        current = seguinte;
-    }
-
-    *l = NULL;
+		printf("\n %d", L->data);
+		L = L->next;
+	}
 
 }
 
-//imprime o tamanho 
-int sizeList(NODE* l) {
-    int size = 0;
+void deleteList(List L) {
+	Node* current = L;
+	Node* seguinte;
 
-    while (l != NULL) {
-        size++;
-        l = l->next;
-        
-    }
-    printf("\na lista tem o tamanho : %d", size);
-    return size;
+	while (current != NULL) {
+		seguinte = current->next;
+		free(current);
+		current = seguinte;
+	}
+
+	L = NULL;
+
 }
 
-int countList(NODE* l) {
-    int count = 0;
+int sizeList(List L) {
+	int size = 0;
 
-    while (l != NULL) {
-        count = count++;
-        l = l->next;
+	while (L != NULL) {
+		size++;
+		L = L->next;
 
-    }
-    printf("\nsoma : %d", count);
-    return count;
+	}
+
+	printf("\n \n A lista apresenta %d de elementos", size);
+	return size;
+}
+
+// calcula a soma dos elementos da lista
+int countList(List L) {
+	int count = 0;
+
+	while (L != NULL) {
+		count = count + L->data;
+		L = L->next;
+	}
+
+	printf("\n \n A soma e igual a %d\n \n ", count);
+	return count;
 }
